@@ -1,22 +1,58 @@
-import AddEmployee from "@/app/components/AddEmployee";
-import { updateEmployee } from "@/lib/actions";
-import { prisma } from "@/lib/prisma";
+// pages/employees/[id].tsx
+import React from 'react';
+import { prisma } from '@/lib/prisma';
 
-export default async function Page({ params }: { params : { id: string } } ) {
-    const id = params.id;
-    const data = await prisma.employee.findUnique({
-        where: {
-            id,
-        },
-    });
-    const updateEmployeeWithId = updateEmployee.bind(null, params.id);
+export default async function EmployeeDetailsPage({
+  params,
+}: {
+  params: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    job: string;
+    email: string;
+  };
+}) {
+  const { id } = params;
+  const data = await prisma.employee.findUnique({
+    where: {
+      id,
+    },
+  });
 
-    return(
-        <main className="max-w-4xl mx-auto mt-20">
-            <div className="text-center my-5 flex flex-col gap-4">
-                <h1 className="text-2xl font-bold"> Employee Management System </h1>
-                <AddEmployee />
-            </div>
-        </main> 
-    )
+  return (
+    <main className="max-w-4xl mx-auto mt-20">
+        <form className="max-w-md mx-auto">
+                <h3 className="font-bold text-lg">View Employee Details</h3>
+
+                <div className="label mt-4">
+                    <span className="label-text">First Name</span>
+                </div>
+                <label className="form-control">
+                    <input name="firstName" id="firstName" type="text" placeholder="Type here" defaultValue={data?.firstName} className="cursor-not-allowed input input-bordered input-primary w-full " readOnly />
+                </label>
+
+                <div className="label mt-4">
+                    <span className="label-text">Last Name</span>
+                </div>
+                <label className="form-control">
+                    <input name="lastName" id="lastName" type="text" placeholder="Type here" defaultValue={data?.lastName} className="cursor-not-allowed input input-bordered input-primary w-full " readOnly />
+                </label>
+
+                <div className="label mt-4">
+                    <span className="label-text">Job</span>
+                </div>
+                <label className="form-control">
+                    <input name="job" id="job" type="text" placeholder="Type here" defaultValue={data?.job} className="cursor-not-allowed input input-bordered input-primary w-full" readOnly />
+                </label>
+
+                <div className="label mt-4">
+                    <span className="label-text">Email</span>
+                </div>
+                <label className="form-control">
+                    <input name="email" id="email" type="text" placeholder="Type here" defaultValue={data?.email} className="cursor-not-allowed input input-bordered input-primary w-full " readOnly />
+                </label>
+                </form>
+    </main>
+  );
 }
