@@ -1,7 +1,3 @@
-// api/employees.ts
-
-// Placeholder data - replace with your actual data or data fetching logic
-
 const employees = [
     {
       id: 'clpvktei50001z6vnjxw0j1fg',
@@ -10,7 +6,6 @@ const employees = [
       job: 'Software Engineer',
       email: 'john.doe@example.com',
     },
-    // Add more employees as needed
   ];
   
   export const getAllEmployeeIds = () => {
